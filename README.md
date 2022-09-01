@@ -20,21 +20,20 @@ It demonstrates the following:
 - [Spring Boot](https://spring.io/projects/spring-boot) 
 - [Spring Data](https://spring.io/projects/spring-data)
 - [Spring Data CosmosDB](https://docs.microsoft.com/en-ca/azure/cosmos-db/sql/sql-api-sdk-java-spring-v3?tabs=explore)
-- [CosmosDB Java SDK]()
-- [CosmosDB Java Bulk Executor]()
-- [Gradle]()
+- [CosmosDB Java SDK v4](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/sql-api-sdk-java-v4)
+- [CosmosDB Java Bulk Executor](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/bulk-executor-java)
+- [Gradle](https://gradle.org/)
+- [Maven Central](https://search.maven.org/)
 
----
+### Dataset: United States Environmental Protection Agency Air Quality
 
-## Interesting Datasets
+This dataset is used in this repo for **Telemetry** data. 
 
-- https://docs.microsoft.com/en-us/azure/open-datasets/
-- https://docs.microsoft.com/en-us/azure/open-datasets/dataset-catalog
-- https://www.epa.gov/outdoor-air-quality-data
-
-### United States Environmental Protection Agency 
+See file **console_app/data/epa/readme.md** regarding how to download this data
+since it is too large to store in this GitHub repository.
 
 - https://aqs.epa.gov/aqsweb/airdata/download_files.html#eighthour
 - https://aqs.epa.gov/aqsweb/airdata/8hour_44201_2021.zip 
   File: 8hour_44201_2021.zip, 6,554,736 Rows, 55,243 KB, As of 2022-06-01
 
+---
