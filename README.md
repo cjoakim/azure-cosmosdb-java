@@ -11,7 +11,7 @@ It demonstrates the following:
 - Use of a **Spring Boot** web application (future enhancement)
 - Use of the **Gradle** build tool rather than Maven
 
-### Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
+#### Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
 
 ---
 
@@ -29,11 +29,56 @@ It demonstrates the following:
 
 This dataset is used in this repo for **Telemetry** data. 
 
-See file **console_app/data/epa/readme.md** regarding how to download this data
-since it is too large to store in this GitHub repository.
 
 - https://aqs.epa.gov/aqsweb/airdata/download_files.html#eighthour
 - https://aqs.epa.gov/aqsweb/airdata/8hour_44201_2021.zip 
   File: 8hour_44201_2021.zip, 6,554,736 Rows, 55,243 KB, As of 2022-06-01
 
 ---
+
+## Getting Started 
+
+### Provision a CosmosDB SQL API Account
+
+- Create a **CosmosDB SQL API Account**
+  - There are several ways to do this; including:
+    - The Azure Portal UI 
+    - PowerShell
+    - az CLI
+    - Bicep 
+    
+- Create a **database** within the account; I use the name **dev**
+- Create a **container** within the account; I use the name **telemetry** 
+  - use the partition key **/pk** 
+  - I provisioned **10,000 Request Units (RUs), Autoscale** for my container 
+  
+### Set Environment Variables 
+
+```
+
+```
+### Clone This Repository and Compile the Code 
+
+```
+> git clone https://github.com/cjoakim/azure-cosmosdb-java.git
+> azure-cosmosdb-java
+```
+
+### Download the EPA Data 
+
+See file **console_app/data/epa/readme.md** regarding how to download this data
+since it is too large to store in GitHub.
+
+After you download and unzip the file you should have this file relative to 
+where you cloned this GitHub repository to:
+
+```
+console_app/data/epa/8hour_44201_2021/8hour_44201_2021.csv
+```
+
+Note: this file is ignored by git; see the .gitignore file.
+
+### Load and Query CosmosDB 
+
+
+
