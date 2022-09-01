@@ -9,6 +9,7 @@ It demonstrates the following:
 - Use of the **CosmosDB Asynch SDK** 
 - Use of the **CosmosDB Bulk Executor SDK** 
 - Use of a **Spring Boot** web application (future enhancement)
+- Use of the **Gradle** build tool rather than Maven
 
 ### Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
 
@@ -16,8 +17,13 @@ It demonstrates the following:
 
 ## Links
 
-- https://docs.microsoft.com/en-us/azure/developer/java/spring-framework/how-to-guides-spring-data-cosmosdb
-- 
+- [Spring Boot](https://spring.io/projects/spring-boot) 
+- [Spring Data](https://spring.io/projects/spring-data)
+- [Spring Data CosmosDB](https://docs.microsoft.com/en-ca/azure/cosmos-db/sql/sql-api-sdk-java-spring-v3?tabs=explore)
+- [CosmosDB Java SDK]()
+- [CosmosDB Java Bulk Executor]()
+- [Gradle]()
+
 ---
 
 ## Interesting Datasets
