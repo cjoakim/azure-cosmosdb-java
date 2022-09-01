@@ -1,10 +1,14 @@
-# azure-cosmosdb-spring
+# azure-cosmosdb-java
 
-Sample **Spring Boot** console and web applications with the **Azure CosmosDB SQL API**, **Asynch SDK**, and **Spring Data**
+This repo contains a **sample CosmosDB SQL API application implemented in Java**.
 
-<p align="center">
-    <img src="doc/img/azure-cosmosdb-spring-logo.png" width="95%">
-</p>
+It demonstrates the following:
+
+- Use of a **Spring Boot** console application
+- Use of the **Spring Data** framework with CosmosDB
+- Use of the **CosmosDB Asynch SDK** 
+- Use of the **CosmosDB Bulk Executor SDK** 
+- Use of a **Spring Boot** web application (future enhancement)
 
 ## Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
 
