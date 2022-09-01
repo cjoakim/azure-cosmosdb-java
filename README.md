@@ -10,7 +10,7 @@ It demonstrates the following:
 - Use of the **CosmosDB Bulk Executor SDK** 
 - Use of a **Spring Boot** web application (future enhancement)
 
-## Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
+### Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
 
 ---
 
