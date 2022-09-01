@@ -37,13 +37,8 @@ It demonstrates the following:
 
 ### Provision a CosmosDB SQL API Account
 
-- Create a **CosmosDB SQL API Account**
-  - There are several ways to do this; including:
-    - The Azure Portal UI 
-    - PowerShell
-    - az CLI
-    - Bicep 
-    
+- Create a **CosmosDB SQL API Account**.  There are several ways to do this; including:
+  - the **Azure Portal UI**, az CLI, ARM/Bicep, Azure DevOps, Terraform, etc..
 - Create a **database** within the account; I use the name **dev**
 - Create a **container** within the account; I use the name **telemetry** 
   - use the partition key **/pk** 
