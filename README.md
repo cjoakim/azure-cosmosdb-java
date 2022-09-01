@@ -7,9 +7,10 @@ It demonstrates the following:
 - Use of a **Spring Boot** console application
 - Use of the **Spring Data** framework with CosmosDB
 - Use of the **CosmosDB Asynch SDK** 
-- Use of the **CosmosDB Bulk Executor SDK** 
-- Use of a **Spring Boot** web application (future enhancement)
+- Use of the **CosmosDB Bulk Executor SDK**
 - Use of the **Gradle** build tool rather than Maven
+- Using a public domain Telemetry dataset - EPA Air Quality
+- Use of a **Spring Boot** web application (future enhancement)
 
 #### Chris Joakim, Microsoft, CosmosDB Global Black Belt (GBB)
 
@@ -25,14 +26,10 @@ It demonstrates the following:
 - [Gradle](https://gradle.org/)
 - [Maven Central](https://search.maven.org/)
 
-### Dataset: United States Environmental Protection Agency Air Quality
+### Details
 
-This dataset is used in this repo for **Telemetry** data. 
+- [Spring Boot](https://spring.io/projects/spring-boot)
 
-
-- https://aqs.epa.gov/aqsweb/airdata/download_files.html#eighthour
-- https://aqs.epa.gov/aqsweb/airdata/8hour_44201_2021.zip 
-  File: 8hour_44201_2021.zip, 6,554,736 Rows, 55,243 KB, As of 2022-06-01
 
 ---
 
@@ -54,20 +51,41 @@ This dataset is used in this repo for **Telemetry** data.
   
 ### Set Environment Variables 
 
-```
+Set the following environment variables so that the Java code can connect to 
+your account and database.
 
 ```
+AZURE_COSMOSDB_SQL_URI
+AZURE_COSMOSDB_SQL_RW_KEY1
+AZURE_COSMOSDB_SQL_DB
+AZURE_COSMOSDB_SQL_MAX_DEG_PAR
+```
+
+**AZURE_COSMOSDB_SQL_URI** is the URI of your account and can be found in the
+**Keys** view Azure Portal under your account.
+
+**AZURE_COSMOSDB_SQL_RW_KEY1** is the primary read-write key, also found in the
+**Keys** view Azure Portal under your account. 
+
+**AZURE_COSMOSDB_SQL_DB** is the database name you created above.
+
+**AZURE_COSMOSDB_SQL_MAX_DEG_PAR** can be set to 0.
+
 ### Clone This Repository and Compile the Code 
 
 ```
 > git clone https://github.com/cjoakim/azure-cosmosdb-java.git
 > azure-cosmosdb-java
+> gradle build
 ```
 
-### Download the EPA Data 
+### Download the US EPA AirQuality Dataset
+
+This dataset is from the **United States Environmental Protection Agency**
+on **Air Quality**.  This public-domain dataset is used in this repo for **Telemetry** data.
 
 See file **console_app/data/epa/readme.md** regarding how to download this data
-since it is too large to store in GitHub.
+since it is too large to store in GitHub.  It contains approximately 6.5 million rows.
 
 After you download and unzip the file you should have this file relative to 
 where you cloned this GitHub repository to:
@@ -78,7 +96,59 @@ console_app/data/epa/8hour_44201_2021/8hour_44201_2021.csv
 
 Note: this file is ignored by git; see the .gitignore file.
 
+### Review file src/main/resources/application.properties
+
+See file **console_app/src/main/resources/application.properties**
+and make any necessary configuration edits.  
+
+Notice how this file sets properties based on the environment variables
+you set above.
+
+```
+# Spring Data CosmosDB
+spring.cloud.azure.cosmos.endpoint=${AZURE_COSMOSDB_SQL_URI}
+spring.cloud.azure.cosmos.key=${AZURE_COSMOSDB_SQL_RW_KEY1}
+spring.cloud.azure.cosmos.database=${AZURE_COSMOSDB_SQL_DB}
+```
+
 ### Load and Query CosmosDB 
 
+Start in the root directory of the repository on your computer.
 
+```
+> cd .\console_app\
+> mkdir tmp
+> gradle build
+```
+
+See file **build.gradle** which defines "tasks" that Gradle can execute.
+Note how the tasks can pass command-line arguments (args) to the Java program, 
+like this:
+
+```
+task transformRawEpaOzoneData(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'transform_raw_epa_ozone_data', '0', '50000', 'latLng', '--verbose'
+}
+```
+
+#### Execute these Gradle tasks in this sequence
+
+```
+> gradle transformRawEpaOzoneData
+
+> gradle loadTelemetryDataWithSpringData
+
+> gradle queryTelemetryWithSpringData
+
+> gradle queryTelemetryWithSdk 
+
+> gradle deleteAllDocumentsWithSpringData 
+
+> gradle loadEpaOzoneDataWithSdkBulkLoad
+```
+
+As the task names indicate, some of these tasks use **Spring Data** while others
+use the **CosmosDB SDK** - this is intentional as a demonstration of each approach.
 
