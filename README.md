@@ -18,6 +18,7 @@ It demonstrates the following:
 
 ## Links
 
+- <a href="https://spring.io/projects/spring-boot" target="_blank">Spring Boot</a>
 - [Spring Boot](https://spring.io/projects/spring-boot) 
 - [Spring Data](https://spring.io/projects/spring-data)
 - [Spring Data CosmosDB](https://docs.microsoft.com/en-ca/azure/cosmos-db/sql/sql-api-sdk-java-spring-v3?tabs=explore)
