@@ -29,7 +29,7 @@ It demonstrates the following:
 - [CosmosDB Java SDK @ GitHub](https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/cosmos/azure-cosmos)
 - [CosmosDB Java Bulk Executor](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/bulk-executor-java)
 - [Gradle](https://gradle.org/)
-- [Maven Central](https://search.maven.org/)
+- [azure-cosmos @ MvnRepository](https://mvnrepository.com/artifact/com.azure/azure-cosmos)
 
 ### Details
 
@@ -78,6 +78,38 @@ AZURE_COSMOSDB_SQL_MAX_DEG_PAR
 > azure-cosmosdb-java
 > gradle build
 ```
+
+#### Wait, what Libraries are we using, and what's on my CLASSPATH?
+
+See **build.gradle** where you declare your project **dependencies**:
+
+```
+  dependencies {
+      implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'    <---
+      implementation 'org.apache.commons:commons-csv:1.9.0'
+      compileOnly 'org.projectlombok:lombok'
+      developmentOnly 'org.springframework.boot:spring-boot-devtools'
+      annotationProcessor 'org.projectlombok:lombok'
+      testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  }
+```
+
+The **CosmosDB SDK v4 library** is **azure-cosmos** and is included in
+**com.azure.spring:spring-cloud-azure-starter-data-cosmos**.
+
+To list the JAR files on the Gradle project CLASSPATH, run this command:
+
+``` 
+> gradle dependencies --configuration runtimeClasspath > data/classpath/runtimeClasspath.txt
+```
+
+Search file for **azure-cosmos** and you'll find:
+
+```
+|         +--- com.azure:azure-cosmos:4.32.0 -> 4.31.0
+```
+
+[CLASSPATH](console_app/data/classpath/runtimeClasspath.txt)
 
 ### Download the US EPA AirQuality Dataset
 
@@ -151,4 +183,3 @@ task transformRawEpaOzoneData(type: JavaExec) {
 
 As the task names indicate, some of these tasks use **Spring Data** while others
 use the **CosmosDB SDK** - this is intentional as a demonstration of each approach.
-

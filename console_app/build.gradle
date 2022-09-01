@@ -25,13 +25,9 @@ ext {
 dependencies {
     implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
     implementation 'org.apache.commons:commons-csv:1.9.0'
-
     compileOnly 'org.projectlombok:lombok'
-
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     annotationProcessor 'org.projectlombok:lombok'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
