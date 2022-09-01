@@ -96,7 +96,7 @@ console_app/data/epa/8hour_44201_2021/8hour_44201_2021.csv
 
 Note: this file is ignored by git; see the .gitignore file.
 
-### Review file src/main/resources/application.properties
+### Review file application.properties
 
 See file **console_app/src/main/resources/application.properties**
 and make any necessary configuration edits.  
