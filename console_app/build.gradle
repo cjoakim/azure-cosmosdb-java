@@ -1,0 +1,82 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'java'
+}
+
+group = 'org.cjoakim.cosmosdb.spring'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudAzureVersion', "4.3.0")
+}
+
+dependencies {
+    implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+task transformRawEpaOzoneData(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'transform_raw_epa_ozone_data', '0', '50000', 'latLng', '--verbose'
+}
+
+task loadTelemetryDataWithSpringData(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'load_telemetry_with_spring_data', '0', '1000', 'epa_ozone_telemetry', 'data/epa/8hour_44201_2021/ozone_telemetry.json', '--do-writes', '--xverbose'
+}
+
+task queryTelemetryWithSpringData(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'query_telemetry_with_spring_data', ' count findByStateCode findByStateCodeAndCountyCode findByObservationCount findByStateCodeAndSiteNumbers '
+}
+
+task deleteAllDocumentsWithSpringData(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'delete_all_documents_with_spring_data', 'telemetry'
+}
+
+task queryTelemetryWithSdk(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'query_telemetry_with_sdk', 'telemetry', '--verbose'
+}
+
+task loadEpaOzoneDataWithSdkBulkLoad(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'load_epa_ozone_data_with_sdk_bulk_load', '0', '50000', 'epa_ozone_telemetry', 'data/epa/8hour_44201_2021/ozone_telemetry.json', '--do-writes', '--xverbose'
+}

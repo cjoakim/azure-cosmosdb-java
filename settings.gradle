@@ -1,0 +1,6 @@
+// Parent Gradle project
+// Chris Joakim, Microsoft, September 2022
+
+rootProject.name = 'cosmosdb_spring'
+include 'console_app'
+include 'web_app'

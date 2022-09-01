@@ -1,3 +1,35 @@
+## cj manual entries
+
+gradle/
+gradlew
+gradlew.bat
+
+**/*.class
+**/*.gz 
+**/*.iml
+**/*.swp
+**/*.tsv 
+**/*.zip
+
+**/.DS_Store
+**/.classpath
+**/.factorypath
+**/.gradle/
+**/.idea/
+**/.vs/
+**/.vscode
+**/bin/
+**/build/
+**/cache/
+**/target/
+**/tmp/
+
+console_app/data/epa/8hour_44201_2021/8hour_44201_2021.csv
+console_app/data/epa/8hour_44201_2021/*.json
+
+
+## Spring Initializr generated entries below
+
 .gradle
 /build/
 
