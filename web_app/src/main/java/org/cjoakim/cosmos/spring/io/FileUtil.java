@@ -1,4 +1,5 @@
-package org.cjoakim.cosmos.spring.web.io;
+package org.cjoakim.cosmos.spring.io;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,8 +16,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
+ * Instances of this class are used to perform all local disk IO for this application.
  *
- * Chris Joakim, Microsoft, August 2022
+ * Chris Joakim, Microsoft, September 2022
  */
 
 @Slf4j
@@ -90,6 +92,32 @@ public class FileUtil {
         try {
             fw = new FileWriter(outfile);
             fw.write(text);
+            if (verbose) {
+                log.warn("file written: " + outfile);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        finally {
+            if (fw != null) {
+                fw.close();
+            }
+        }
+    }
+
+    public void writeLines(String outfile, ArrayList<String> lines, boolean verbose) throws Exception {
+
+        FileWriter fw = null;
+
+        try {
+            fw = new FileWriter(outfile);
+            for (int i = 0; i < lines.size(); i++) {
+                fw.write(lines.get(i));
+                fw.write(System.lineSeparator());
+            }
+
             if (verbose) {
                 log.warn("file written: " + outfile);
             }
