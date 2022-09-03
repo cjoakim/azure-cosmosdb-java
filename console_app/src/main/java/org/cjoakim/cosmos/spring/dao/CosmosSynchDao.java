@@ -9,8 +9,13 @@ import com.azure.cosmos.models.FeedResponse;
 import com.azure.cosmos.util.CosmosPagedIterable;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
+import org.cjoakim.cosmos.spring.AppConfiguration;
 import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 /**
  * This is a Data Access Object (DAO) which uses the CosmosDB SDK for Java
@@ -19,6 +24,7 @@ import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
  * Chris Joakim, Microsoft, September 2022
  */
 
+@Configuration
 @Slf4j
 public class CosmosSynchDao {
 
@@ -45,15 +51,17 @@ public class CosmosSynchDao {
         this.currentDbName = dbName;
 
         if (verbose) {
-            log.warn("uri:    " + uri);
-            log.warn("key:    " + key);
-            log.warn("dbName: " + dbName);
+            log.warn("uri:     " + uri);
+            log.warn("key:     " + key);
+            log.warn("dbName:  " + dbName);
+            log.warn("regions: " + AppConfiguration.getInstance().getPreferredRegions());
         }
 
         if (client == null) {
             client = new CosmosClientBuilder()
                     .endpoint(uri)
                     .key(key)
+                    .preferredRegions(AppConfiguration.getInstance().getPreferredRegions())
                     .buildClient();
             log.warn("client: " + client);
 

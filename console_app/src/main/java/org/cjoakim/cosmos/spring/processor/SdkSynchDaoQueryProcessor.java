@@ -11,6 +11,8 @@ import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  *
  *

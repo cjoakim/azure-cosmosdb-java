@@ -6,8 +6,13 @@ import com.azure.cosmos.models.FeedResponse;
 import com.azure.cosmos.util.CosmosPagedFlux;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
+import org.cjoakim.cosmos.spring.AppConfiguration;
 import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 /**
  * This is a Data Access Object (DAO) which uses the CosmosDB SDK for Java
@@ -35,22 +40,25 @@ public class CosmosAsynchDao {
         super();
     }
 
-    public CosmosAsyncClient initialize(String uri, String key, String dbName, boolean verbose) {
+    public CosmosAsyncClient initialize(
+            String uri, String key, String dbName, boolean verbose) {
 
         this.uri = uri;
         this.key = key;
         this.currentDbName = dbName;
 
         if (verbose) {
-            log.warn("uri:    " + uri);
-            log.warn("key:    " + key);
-            log.warn("dbName: " + dbName);
+            log.warn("uri:     " + uri);
+            log.warn("key:     " + key);
+            log.warn("dbName:  " + dbName);
+            log.warn("regions: " + AppConfiguration.getInstance().getPreferredRegions());
         }
 
         if (client == null) {
             client = new CosmosClientBuilder()
                     .endpoint(uri)
                     .key(key)
+                    .preferredRegions(AppConfiguration.getInstance().getPreferredRegions())
                     .consistencyLevel(ConsistencyLevel.SESSION)
                     .contentResponseOnWriteEnabled(true)
                     .buildAsyncClient();
