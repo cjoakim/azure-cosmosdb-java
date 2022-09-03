@@ -52,8 +52,9 @@ your account and database.
 
 ```
 AZURE_COSMOSDB_SQL_URI
-AZURE_COSMOSDB_SQL_RW_KEY1
+AZURE_COSMOSDB_SQL_RW_KEY1 
 AZURE_COSMOSDB_SQL_DB
+AZURE_COSMOSDB_SQL_REGIONS
 AZURE_COSMOSDB_SQL_MAX_DEG_PAR
 ```
 
@@ -65,7 +66,11 @@ AZURE_COSMOSDB_SQL_MAX_DEG_PAR
 
 **AZURE_COSMOSDB_SQL_DB** is the database name you created above.
 
-**AZURE_COSMOSDB_SQL_MAX_DEG_PAR** can be set to 0.
+**AZURE_COSMOSDB_SQL_REGIONS** is a comma separated list of preferred regions
+
+**AZURE_COSMOSDB_SQL_MAX_DEG_PAR** can be set to -1.  If it is set to less than 0,
+the system automatically decides the number of concurrent operations to run.
+See https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.documents.client.feedoptions.maxdegreeofparallelism?view=azure-dotnet
 
 ### Clone This Repository and Compile the Code 
 
@@ -137,6 +142,9 @@ you set above.
 spring.cloud.azure.cosmos.endpoint=${AZURE_COSMOSDB_SQL_URI}
 spring.cloud.azure.cosmos.key=${AZURE_COSMOSDB_SQL_RW_KEY1}
 spring.cloud.azure.cosmos.database=${AZURE_COSMOSDB_SQL_DB}
+azure.cosmos.maxDegreeOfParallelism=${AZURE_COSMOSDB_SQL_MAX_DEG_PAR}
+spring.cloud.azure.cosmos.populate-query-metrics=false
+azure.cosmos.queryMetricsEnabled=false
 ```
 
 ### Load and Query CosmosDB 
