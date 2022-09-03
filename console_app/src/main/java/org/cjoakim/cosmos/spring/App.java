@@ -26,7 +26,7 @@ public class App implements CommandLineRunner, AppConstants {
     @Autowired private SpringDataQueryProcessor springDataQueryProcessor;
     @Autowired private SpringDataDeleteAllProcessor springDataDeleteProcessor;
     @Autowired private RepoQueryProcessor repoQueryProcessor;
-    @Autowired private SynchDaoQueryProcessor synchDaoQueryProcessor;
+    @Autowired private SdkSynchDaoQueryProcessor sdkSynchDaoQueryProcessor;
 
     public static void main(String[] args) {
         AppConfiguration.setCommandLineArgs(args);
@@ -69,6 +69,11 @@ public class App implements CommandLineRunner, AppConstants {
                     springDataDeleteProcessor.process();
                     break;
 
+                case "query_telemetry_with_synch_sdk":
+                    sdkSynchDaoQueryProcessor.setContainer(args[1]);
+                    sdkSynchDaoQueryProcessor.process();
+                    break;
+
                 case "load_telemetry_data_with_sdk_bulk_load":
                     // TODO - implement
                     //springDataLoader.setSkipCount(Long.parseLong(args[1]));
@@ -76,11 +81,6 @@ public class App implements CommandLineRunner, AppConstants {
                     //springDataLoader.setLoadType(args[3]);
                     //springDataLoader.setInfile(args[4]);
                     //springDataLoader.process();
-                    break;
-
-                case "query_telemetry_with_synch_sdk":
-                    synchDaoQueryProcessor.setContainer(args[1]);
-                    synchDaoQueryProcessor.process();
                     break;
 
                 default:

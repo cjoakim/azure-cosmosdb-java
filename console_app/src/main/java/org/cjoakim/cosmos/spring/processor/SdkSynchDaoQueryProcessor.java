@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class SynchDaoQueryProcessor extends ConsoleAppProcessor implements AppConstants {
+public class SdkSynchDaoQueryProcessor extends ConsoleAppProcessor implements AppConstants {
     @Value("${spring.cloud.azure.cosmos.endpoint}")
     public String uri;
     @Value("${spring.cloud.azure.cosmos.key}")
