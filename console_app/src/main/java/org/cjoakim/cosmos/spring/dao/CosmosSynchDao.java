@@ -6,12 +6,11 @@ import com.azure.cosmos.CosmosContainer;
 import com.azure.cosmos.CosmosDatabase;
 import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.FeedResponse;
+import com.azure.cosmos.util.CosmosPagedIterable;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import org.cjoakim.cosmos.spring.AppConfiguration;
 import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
-
-import java.util.ArrayList;
 
 /**
  * This is a Data Access Object (DAO) which uses the CosmosDB SDK for Java
@@ -21,7 +20,7 @@ import java.util.ArrayList;
  */
 
 @Slf4j
-public class CosmosSdkDao {
+public class CosmosSynchDao {
 
     private CosmosClient client;
     private CosmosDatabase database;
@@ -34,7 +33,7 @@ public class CosmosSdkDao {
 
     boolean verbose;
 
-    public CosmosSdkDao() {
+    public CosmosSynchDao() {
 
         super();
     }
@@ -112,6 +111,33 @@ public class CosmosSdkDao {
         }
         while (continuationToken != null);
 
+        return resultsStruct;
+    }
+
+    public TelemetryQueryResults countAllTelemetry() {
+
+        String sql = "select count(1) as count from c";
+        int    pageSize = 100;
+        String continuationToken = null;
+        CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();
+
+        TelemetryQueryResults resultsStruct = new TelemetryQueryResults();
+        resultsStruct.setSql(sql);
+
+        Iterable<FeedResponse<JsonNode>> feedResponseIterator =
+                container.queryItems(sql, queryOptions, JsonNode.class)
+                        .iterableByPage(continuationToken, 1);
+
+        // only one result in one page is expected here
+        for (FeedResponse<JsonNode> page : feedResponseIterator) {
+            for (JsonNode node : page.getResults()) {
+                log.warn("Count: " + node.toString());  // Count: {"count":1000} or Count: {"$1":1000}
+                long count = Long.parseLong(node.get("count").asText());
+                resultsStruct.setDocumentCount(count);
+            }
+            resultsStruct.addRequestCharge(page.getRequestCharge());
+            resultsStruct.incrementPageCount();
+        }
         return resultsStruct;
     }
 }

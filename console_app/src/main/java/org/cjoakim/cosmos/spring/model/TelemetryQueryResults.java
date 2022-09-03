@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class TelemetryQueryResults {
 
     private ArrayList<TelemetryEvent> documents;
+    private long documentCount;
     private String sql;
     private double requestCharge;
     private int pageCount;
@@ -33,12 +34,8 @@ public class TelemetryQueryResults {
 
         if (doc != null) {
             documents.add(doc);
+            documentCount++;
         }
-    }
-
-    public int getDocumentCount() {
-
-        return documents.size();
     }
 
     public void incrementPageCount() {
