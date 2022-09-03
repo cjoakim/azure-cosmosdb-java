@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+
 /**
  * This class is a Spring Boot @Configuration class that also provides configuration
  * values for the Spring Data CosmosDB repositories.
@@ -26,6 +28,13 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration extends AbstractCosmosConfiguration implements AppConstants {
 
     private static AppConfiguration singleton;
+
+    public static AppConfiguration getInstance() {
+       if (singleton == null) {
+           singleton = new AppConfiguration();
+       }
+       return singleton;
+    }
 
     public AppConfiguration() {
         super();
@@ -134,6 +143,9 @@ public class AppConfiguration extends AbstractCosmosConfiguration implements App
     @Value("${azure.cosmos.maxDegreeOfParallelism}")
     private int maxDegreeOfParallelism;
 
+    @Value("${AZURE_COSMOSDB_SQL_REGIONS}")
+    private String preferredRegionsString;
+
     private AzureKeyCredential azureKeyCredential;
 
     @Bean
@@ -147,6 +159,7 @@ public class AppConfiguration extends AbstractCosmosConfiguration implements App
         return new CosmosClientBuilder()
                 .endpoint(uri)
                 .credential(azureKeyCredential)
+                .preferredRegions(getPreferredRegions())
                 .directMode(directConnectionConfig, gatewayConnectionConfig);
     }
 
@@ -168,4 +181,17 @@ public class AppConfiguration extends AbstractCosmosConfiguration implements App
         return dbName;
     }
 
+    public ArrayList<String> getPreferredRegions() {
+
+        log.warn("getPreferredRegions: " + preferredRegionsString);
+
+        ArrayList<String> list = new ArrayList<String>();
+        if (preferredRegionsString != null) {
+            String[] regions = preferredRegionsString.split(",");
+            for (String region: regions) {
+                list.add(region);
+            }
+        }
+        return list;
+    }
 }
