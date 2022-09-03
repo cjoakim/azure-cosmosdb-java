@@ -25,6 +25,10 @@ public class TelemetryQueryResults {
     private double requestCharge;
     private int pageCount;
 
+    private long startMs;
+    private long finishMs;
+    private long elapsedMs;
+
     public TelemetryQueryResults() {
 
         this(null);
@@ -35,6 +39,17 @@ public class TelemetryQueryResults {
         super();
         documents = new ArrayList<TelemetryEvent>();
         this.sql = sql;
+    }
+
+    public long start() {
+        startMs = System.currentTimeMillis();
+        return startMs;
+    }
+
+    public long stop() {
+        finishMs = System.currentTimeMillis();
+        elapsedMs = finishMs - startMs;
+        return finishMs;
     }
 
     public void addDocument(TelemetryEvent doc) {

@@ -89,6 +89,7 @@ public class CosmosAsynchDao {
         String continuationToken = null;
         CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();
         TelemetryQueryResults resultsStruct = new TelemetryQueryResults(sql);
+        resultsStruct.start();
 
         // Execute the SQL query and iterate the paginated result set,
         // collecting the documents and total RU charge.
@@ -107,7 +108,7 @@ public class CosmosAsynchDao {
             }
         }
         while (continuationToken != null);
-
+        resultsStruct.stop();
         return resultsStruct;
     }
 
@@ -118,6 +119,7 @@ public class CosmosAsynchDao {
         String continuationToken = null;
         CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();
         TelemetryQueryResults resultsStruct = new TelemetryQueryResults(sql);
+        resultsStruct.start();
 
         Iterable<FeedResponse<JsonNode>> feedResponseIterator =
                 container.queryItems(sql, queryOptions, JsonNode.class).byPage(
@@ -133,6 +135,7 @@ public class CosmosAsynchDao {
             resultsStruct.addRequestCharge(page.getRequestCharge());
             resultsStruct.incrementPageCount();
         }
+        resultsStruct.stop();
         return resultsStruct;
     }
 }
