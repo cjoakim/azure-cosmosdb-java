@@ -1,14 +1,14 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import java.text.DecimalFormat;
 
 /**
- * Abstract superclass for processing delegated from the main entry-point class.
+ * Abstract superclass for processing that is delegated from the main entry-point; class App.
  *
  * Chris Joakim, Microsoft, September 2022
  */
 
-public abstract class ConsoleAppProcessor {
+public abstract class AbstractProcess {
 
     public abstract void process() throws Exception;
 

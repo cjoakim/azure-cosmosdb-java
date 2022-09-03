@@ -1,20 +1,18 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.cjoakim.cosmos.spring.AppConfiguration;
 import org.cjoakim.cosmos.spring.AppConstants;
-import org.cjoakim.cosmos.spring.dao.CosmosSynchDao;
+import org.cjoakim.cosmos.spring.dao.CosmosAsynchDao;
 import org.cjoakim.cosmos.spring.io.FileUtil;
 import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 /**
- * Execute CosmosDB queries with the SDK and Synch methods.
+ * Execute CosmosDB queries with the SDK and Asynch methods.
  *
  * Chris Joakim, Microsoft, September 2022
  */
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class SdkSynchDaoQueryProcessor extends ConsoleAppProcessor implements AppConstants {
+public class SdkAsynchDaoQueryProcess extends AbstractProcess implements AppConstants {
     @Value("${spring.cloud.azure.cosmos.endpoint}")
     public String uri;
     @Value("${spring.cloud.azure.cosmos.key}")
@@ -33,7 +31,7 @@ public class SdkSynchDaoQueryProcessor extends ConsoleAppProcessor implements Ap
     private String container;
     private boolean verbose;
     private FileUtil fileUtil = new FileUtil();
-    private CosmosSynchDao dao = new CosmosSynchDao();
+    private CosmosAsynchDao dao = new CosmosAsynchDao();
 
     public void process() throws Exception {
 
@@ -44,11 +42,11 @@ public class SdkSynchDaoQueryProcessor extends ConsoleAppProcessor implements Ap
 
             TelemetryQueryResults queryResultsStruct = dao.getAllTelemetry();
             log.warn("getAllTelemetry docs count: " + queryResultsStruct.getDocumentCount());
-            saveResults(queryResultsStruct, "sdkSynchTelemetryQuery");
+            saveResults(queryResultsStruct, "sdkAsynchTelemetryQuery");
 
             TelemetryQueryResults countResultsStruct = dao.countAllTelemetry();
             log.warn("countAllTelemetry docs count: " + queryResultsStruct.getDocumentCount());
-            saveResults(countResultsStruct, "sdkSynchTelemetryCount");
+            saveResults(countResultsStruct, "sdkAsynchTelemetryCount");
 
         }
         finally {

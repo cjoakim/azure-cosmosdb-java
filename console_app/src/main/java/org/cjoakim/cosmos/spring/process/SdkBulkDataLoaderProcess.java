@@ -1,4 +1,4 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +31,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class SdkBulkDataLoaderProcessor extends ConsoleAppProcessor implements AppConstants {
+public class SdkBulkDataLoaderProcess extends AbstractProcess implements AppConstants {
 
     private String container;
     private long   skipCount  = 0;

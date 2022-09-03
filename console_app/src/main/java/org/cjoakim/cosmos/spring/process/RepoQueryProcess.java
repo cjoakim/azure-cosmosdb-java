@@ -1,4 +1,4 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import com.azure.spring.data.cosmos.core.CosmosTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -17,20 +17,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class RepoQueryProcessor extends ConsoleAppProcessor implements AppConstants {
+public class RepoQueryProcess extends AbstractProcess implements AppConstants {
 
     private TelemetryRepository epaOzoneTelemetryRepository = null;
 
     private CosmosTemplate template;
 
     @Autowired
-    public RepoQueryProcessor(
+    public RepoQueryProcess(
             TelemetryRepository epaOzoneTelemRepo,
             CosmosTemplate t) {
         super();
         this.epaOzoneTelemetryRepository = epaOzoneTelemRepo;
         this.template = t;
-        log.warn("RepoQueryProcessor autowired constructor called");
+        log.warn("RepoQueryProcess autowired constructor called");
     }
 
     public void process() throws Exception {

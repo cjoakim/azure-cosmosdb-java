@@ -1,4 +1,4 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * This ConsoleAppProcessor is used to delete all documents from a given container.
+ * This AbstractProcess is used to delete all documents from a given container.
  *
  * Chris Joakim, Microsoft, September 2022
  */
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class SpringDataDeleteAllProcessor extends ConsoleAppProcessor implements AppConstants {
+public class SpringDataDeleteAllProcess extends AbstractProcess implements AppConstants {
 
     private String container;
     long startMillis = System.currentTimeMillis();

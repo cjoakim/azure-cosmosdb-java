@@ -1,7 +1,7 @@
 package org.cjoakim.cosmos.spring;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cjoakim.cosmos.spring.processor.*;
+import org.cjoakim.cosmos.spring.process.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,14 +22,14 @@ public class App implements CommandLineRunner, AppConstants {
     @Autowired private ApplicationContext applicationContext;
     //@Autowired private TripleRepository tripleRepository;
 
-    @Autowired private SpringDataLoaderProcessor springDataLoader;
-    @Autowired private SpringDataQueryProcessor springDataQueryProcessor;
-    @Autowired private SpringDataDeleteAllProcessor springDataDeleteProcessor;
-    @Autowired private RepoQueryProcessor repoQueryProcessor;
-    @Autowired private SdkSynchDaoQueryProcessor sdkSynchDaoQueryProcessor;
-    @Autowired private SdkAsynchDaoQueryProcessor sdkAsynchDaoQueryProcessor;
+    @Autowired private SpringDataLoaderProcess springDataLoader;
+    @Autowired private SpringDataQueryProcess springDataQueryProcess;
+    @Autowired private SpringDataDeleteAllProcess springDataDeleteProcess;
+    @Autowired private RepoQueryProcess repoQueryProcessor;
+    @Autowired private SdkSynchDaoQueryProcess sdkSynchDaoQueryProcess;
+    @Autowired private SdkAsynchDaoQueryProcess sdkAsynchDaoQueryProcess;
 
-    @Autowired private SdkBulkDataLoaderProcessor sdkBulkDataLoaderProcessor;
+    @Autowired private SdkBulkDataLoaderProcess sdkBulkDataLoaderProcess;
 
     public static void main(String[] args) {
         AppConfiguration.setCommandLineArgs(args);
@@ -47,7 +47,7 @@ public class App implements CommandLineRunner, AppConstants {
             switch (processType) {
 
                 case "transform_raw_epa_ozone_data":
-                    EpaRawOzoneDataProcessor epaOzoneDataProcessor = new EpaRawOzoneDataProcessor();
+                    EpaRawOzoneDataProcess epaOzoneDataProcessor = new EpaRawOzoneDataProcess();
                     epaOzoneDataProcessor.setSkipCount(Long.parseLong(args[1]));
                     epaOzoneDataProcessor.setMaxRecords(Long.parseLong(args[2]));
                     epaOzoneDataProcessor.setPartitionKeyStrategy(args[3]);
@@ -63,32 +63,32 @@ public class App implements CommandLineRunner, AppConstants {
                     break;
 
                 case "query_telemetry_with_spring_data":
-                    springDataQueryProcessor.setQueryTypes(args[1]);
-                    springDataQueryProcessor.process();
+                    springDataQueryProcess.setQueryTypes(args[1]);
+                    springDataQueryProcess.process();
                     break;
 
                 case "delete_all_documents_with_spring_data":
-                    springDataDeleteProcessor.setContainer(args[1]);
-                    springDataDeleteProcessor.process();
+                    springDataDeleteProcess.setContainer(args[1]);
+                    springDataDeleteProcess.process();
                     break;
 
                 case "query_telemetry_with_synch_sdk":
-                    sdkSynchDaoQueryProcessor.setContainer(args[1]);
-                    sdkSynchDaoQueryProcessor.process();
+                    sdkSynchDaoQueryProcess.setContainer(args[1]);
+                    sdkSynchDaoQueryProcess.process();
                     break;
 
                 case "query_telemetry_with_asynch_sdk":
-                    sdkAsynchDaoQueryProcessor.setContainer(args[1]);
-                    sdkAsynchDaoQueryProcessor.process();
+                    sdkAsynchDaoQueryProcess.setContainer(args[1]);
+                    sdkAsynchDaoQueryProcess.process();
                     break;
 
                 case "load_telemetry_data_with_sdk_bulk_load":
-                    sdkBulkDataLoaderProcessor.setContainer(args[1]);
-                    sdkBulkDataLoaderProcessor.setSkipCount(Long.parseLong(args[2]));
-                    sdkBulkDataLoaderProcessor.setMaxRecords(Long.parseLong(args[3]));
-                    sdkBulkDataLoaderProcessor.setLoadType(args[4]);
-                    sdkBulkDataLoaderProcessor.setInfile(args[5]);
-                    sdkBulkDataLoaderProcessor.process();
+                    sdkBulkDataLoaderProcess.setContainer(args[1]);
+                    sdkBulkDataLoaderProcess.setSkipCount(Long.parseLong(args[2]));
+                    sdkBulkDataLoaderProcess.setMaxRecords(Long.parseLong(args[3]));
+                    sdkBulkDataLoaderProcess.setLoadType(args[4]);
+                    sdkBulkDataLoaderProcess.setInfile(args[5]);
+                    sdkBulkDataLoaderProcess.process();
                     break;
 
                 default:

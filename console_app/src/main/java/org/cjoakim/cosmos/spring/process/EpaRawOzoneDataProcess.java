@@ -1,4 +1,4 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import java.io.*;
 
 /**
- * This Processor parses the raw downloaded 'data/epa/8hour_44201_2021/8hour_44201_2021.csv'
+ * This Process parses the raw downloaded 'data/epa/8hour_44201_2021/8hour_44201_2021.csv'
  * and parses it into JSON file 'data/epa/8hour_44201_2021/ozone_telemetry.json' containing n-number
  * of documents, where n is a command-line argument.
  *
@@ -22,7 +22,7 @@ import java.io.*;
 
 @Slf4j
 @Data
-public class EpaRawOzoneDataProcessor extends ConsoleAppProcessor implements AppConstants {
+public class EpaRawOzoneDataProcess extends AbstractProcess implements AppConstants {
 
     private long skipCount  = 0;
     private long outputDocCount = 0;
@@ -180,18 +180,18 @@ public class EpaRawOzoneDataProcessor extends ConsoleAppProcessor implements App
 // field 22 : Date of Last Change
 
 //08:57:07.764 [restartedMain] WARN  org.cjoakim.cosmos.spring.App - run, processType: transform_raw_epa_ozone_data
-//08:57:08.771 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - processing document number 10,000
-//08:57:09.167 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - processing document number 20,000
-//08:57:09.439 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - processing document number 30,000
-//08:57:09.663 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - processing document number 40,000
-//08:57:09.876 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - processing document number 50,000
-//08:57:09.877 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - exiting read loop at maxRecords: 50000
-//08:57:09.877 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - closing outfile data/epa/8hour_44201_2021/ozone_telemetry.json
-//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - outfile closed
-//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - skip count:       0
-//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - max records:      50000
-//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - output doc count: 50,000
-//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - elapsed ms:       2112
-//08:57:09.879 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - elapsed minutes:  0.0352
-//08:57:09.879 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcessor - docs per minute:  1420454.5454545454
+//08:57:08.771 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - processing document number 10,000
+//08:57:09.167 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - processing document number 20,000
+//08:57:09.439 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - processing document number 30,000
+//08:57:09.663 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - processing document number 40,000
+//08:57:09.876 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - processing document number 50,000
+//08:57:09.877 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - exiting read loop at maxRecords: 50000
+//08:57:09.877 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - closing outfile data/epa/8hour_44201_2021/ozone_telemetry.json
+//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - outfile closed
+//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - skip count:       0
+//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - max records:      50000
+//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - output doc count: 50,000
+//08:57:09.878 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - elapsed ms:       2112
+//08:57:09.879 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - elapsed minutes:  0.0352
+//08:57:09.879 [restartedMain] WARN  o.c.c.s.p.EpaRawOzoneDataProcess - docs per minute:  1420454.5454545454
 //08:57:09.879 [restartedMain] WARN  org.cjoakim.cosmos.spring.App - spring app exiting

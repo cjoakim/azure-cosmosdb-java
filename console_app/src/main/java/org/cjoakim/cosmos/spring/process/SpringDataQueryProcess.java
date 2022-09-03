@@ -1,4 +1,4 @@
-package org.cjoakim.cosmos.spring.processor;
+package org.cjoakim.cosmos.spring.process;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 /**
- * This ConsoleAppProcessor executes various Spring Data SDK queries vs the telemetry
+ * This AbstractProcess executes various Spring Data SDK queries vs the telemetry
  * container and captures the output as JSON files.
  *
  * Chris Joakim, Microsoft, September 2022
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class SpringDataQueryProcessor extends ConsoleAppProcessor implements AppConstants {
+public class SpringDataQueryProcess extends AbstractProcess implements AppConstants {
 
     private String queryTypes;
     private boolean verbose  = false;
