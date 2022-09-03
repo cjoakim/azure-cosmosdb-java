@@ -159,6 +159,7 @@ public class AppConfiguration extends AbstractCosmosConfiguration implements App
         return new CosmosClientBuilder()
                 .endpoint(uri)
                 .credential(azureKeyCredential)
+                .preferredRegions(getPreferredRegions())
                 .directMode(directConnectionConfig, gatewayConnectionConfig);
     }
 
@@ -181,6 +182,8 @@ public class AppConfiguration extends AbstractCosmosConfiguration implements App
     }
 
     public ArrayList<String> getPreferredRegions() {
+
+        log.warn("getPreferredRegions: " + preferredRegionsString);
 
         ArrayList<String> list = new ArrayList<String>();
         if (preferredRegionsString != null) {
