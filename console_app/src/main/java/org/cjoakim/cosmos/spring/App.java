@@ -28,6 +28,8 @@ public class App implements CommandLineRunner, AppConstants {
     @Autowired private RepoQueryProcessor repoQueryProcessor;
     @Autowired private SdkSynchDaoQueryProcessor sdkSynchDaoQueryProcessor;
 
+    @Autowired private SdkAsynchDaoQueryProcessor sdkAsynchDaoQueryProcessor;
+
     public static void main(String[] args) {
         AppConfiguration.setCommandLineArgs(args);
         log.warn("main method...");
@@ -72,6 +74,11 @@ public class App implements CommandLineRunner, AppConstants {
                 case "query_telemetry_with_synch_sdk":
                     sdkSynchDaoQueryProcessor.setContainer(args[1]);
                     sdkSynchDaoQueryProcessor.process();
+                    break;
+
+                case "query_telemetry_with_asynch_sdk":
+                    sdkAsynchDaoQueryProcessor.setContainer(args[1]);
+                    sdkAsynchDaoQueryProcessor.process();
                     break;
 
                 case "load_telemetry_data_with_sdk_bulk_load":

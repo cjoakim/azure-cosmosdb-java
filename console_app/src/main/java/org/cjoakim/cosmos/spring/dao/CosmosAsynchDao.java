@@ -1,12 +1,9 @@
 package org.cjoakim.cosmos.spring.dao;
 
-import com.azure.cosmos.CosmosClient;
-import com.azure.cosmos.CosmosClientBuilder;
-import com.azure.cosmos.CosmosContainer;
-import com.azure.cosmos.CosmosDatabase;
+import com.azure.cosmos.*;
 import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.FeedResponse;
-import com.azure.cosmos.util.CosmosPagedIterable;
+import com.azure.cosmos.util.CosmosPagedFlux;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.cjoakim.cosmos.spring.model.TelemetryEvent;
@@ -20,11 +17,11 @@ import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
  */
 
 @Slf4j
-public class CosmosSynchDao {
+public class CosmosAsynchDao {
 
-    private CosmosClient client;
-    private CosmosDatabase database;
-    private CosmosContainer container;
+    private CosmosAsyncClient client;
+    private CosmosAsyncDatabase database;
+    private CosmosAsyncContainer container;
 
     private String uri;
     private String key;
@@ -33,12 +30,12 @@ public class CosmosSynchDao {
 
     boolean verbose;
 
-    public CosmosSynchDao() {
+    public CosmosAsynchDao() {
 
         super();
     }
 
-    public CosmosClient initialize(String uri, String key, String dbName, boolean verbose) {
+    public CosmosAsyncClient initialize(String uri, String key, String dbName, boolean verbose) {
 
         this.uri = uri;
         this.key = key;
@@ -54,7 +51,9 @@ public class CosmosSynchDao {
             client = new CosmosClientBuilder()
                     .endpoint(uri)
                     .key(key)
-                    .buildClient();
+                    .consistencyLevel(ConsistencyLevel.SESSION)
+                    .contentResponseOnWriteEnabled(true)
+                    .buildAsyncClient();
             log.warn("client: " + client);
 
             database = client.getDatabase(this.currentDbName);
@@ -95,8 +94,8 @@ public class CosmosSynchDao {
         // collecting the documents and total RU charge.
         do {
             Iterable<FeedResponse<TelemetryEvent>> feedResponseIterator =
-                    container.queryItems(sql, queryOptions, TelemetryEvent.class)
-                            .iterableByPage(continuationToken, pageSize);
+                    container.queryItems(sql, queryOptions, TelemetryEvent.class).byPage(
+                            continuationToken, pageSize).toIterable();  // Asynch Flux to Iterable
 
             for (FeedResponse<TelemetryEvent> page : feedResponseIterator) {
                 for (TelemetryEvent doc : page.getResults()) {
@@ -121,8 +120,8 @@ public class CosmosSynchDao {
         TelemetryQueryResults resultsStruct = new TelemetryQueryResults(sql);
 
         Iterable<FeedResponse<JsonNode>> feedResponseIterator =
-                container.queryItems(sql, queryOptions, JsonNode.class)
-                        .iterableByPage(continuationToken, 1);
+                container.queryItems(sql, queryOptions, JsonNode.class).byPage(
+                        continuationToken, pageSize).toIterable();  // Asynch Flux to Iterable
 
         // only one result in one page is expected here
         for (FeedResponse<JsonNode> page : feedResponseIterator) {

@@ -71,6 +71,12 @@ task queryTelemetryWithSynchSdk(type: JavaExec) {
     args 'query_telemetry_with_synch_sdk', 'telemetry', '--verbose'
 }
 
+task queryTelemetryWithAsynchSdk(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.cjoakim.cosmos.spring.App'
+    args 'query_telemetry_with_asynch_sdk', 'telemetry', '--verbose'
+}
+
 task loadEpaOzoneDataWithSdkBulkLoad(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'org.cjoakim.cosmos.spring.App'

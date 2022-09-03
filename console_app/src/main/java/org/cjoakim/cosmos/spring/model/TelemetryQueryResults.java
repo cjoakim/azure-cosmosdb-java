@@ -27,7 +27,14 @@ public class TelemetryQueryResults {
 
     public TelemetryQueryResults() {
 
+        this(null);
+    }
+
+    public TelemetryQueryResults(String sql) {
+
+        super();
         documents = new ArrayList<TelemetryEvent>();
+        this.sql = sql;
     }
 
     public void addDocument(TelemetryEvent doc) {
