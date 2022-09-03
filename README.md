@@ -16,7 +16,7 @@ It demonstrates the following:
 
 ---
 
-## Links
+## Curated Links
 
 - [Spring Boot](https://spring.io/projects/spring-boot) 
 - [Spring Data](https://spring.io/projects/spring-data)
@@ -24,17 +24,13 @@ It demonstrates the following:
 - [CosmosDB Java SDK v4](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/sql-api-sdk-java-v4)
 - [CosmosDB Java SDK v4 JavaDocs](https://azuresdkdocs.blob.core.windows.net/$web/java/azure-cosmos/latest/index.html)
 - [CosmosDB Java SDK v4 Samples](https://github.com/Azure-Samples/azure-cosmos-java-sql-api-samples)
+- [CosmosDB Java SDK v4 Samples src directory](https://github.com/Azure-Samples/azure-cosmos-java-sql-api-samples/tree/main/src/main/java/com/azure/cosmos/examples)
 - [CosmosDB Java SDK v4 Best Practices](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/best-practice-java)
 - [CosmosDB Java SDK v4 Performance Tips](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/performance-tips-java-sdk-v4-sql?tabs=api-async)
 - [CosmosDB Java SDK @ GitHub](https://github.com/Azure/azure-sdk-for-java/tree/main/sdk/cosmos/azure-cosmos)
 - [CosmosDB Java Bulk Executor](https://docs.microsoft.com/en-us/azure/cosmos-db/sql/bulk-executor-java)
 - [Gradle](https://gradle.org/)
 - [azure-cosmos @ MvnRepository](https://mvnrepository.com/artifact/com.azure/azure-cosmos)
-
-### Details
-
-- [Spring Boot](https://spring.io/projects/spring-boot)
-
 
 ---
 
