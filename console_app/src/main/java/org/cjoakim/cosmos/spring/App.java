@@ -27,8 +27,9 @@ public class App implements CommandLineRunner, AppConstants {
     @Autowired private SpringDataDeleteAllProcessor springDataDeleteProcessor;
     @Autowired private RepoQueryProcessor repoQueryProcessor;
     @Autowired private SdkSynchDaoQueryProcessor sdkSynchDaoQueryProcessor;
-
     @Autowired private SdkAsynchDaoQueryProcessor sdkAsynchDaoQueryProcessor;
+
+    @Autowired private SdkBulkDataLoaderProcessor sdkBulkDataLoaderProcessor;
 
     public static void main(String[] args) {
         AppConfiguration.setCommandLineArgs(args);
@@ -82,12 +83,12 @@ public class App implements CommandLineRunner, AppConstants {
                     break;
 
                 case "load_telemetry_data_with_sdk_bulk_load":
-                    // TODO - implement
-                    //springDataLoader.setSkipCount(Long.parseLong(args[1]));
-                    //springDataLoader.setMaxRecords(Long.parseLong(args[2]));
-                    //springDataLoader.setLoadType(args[3]);
-                    //springDataLoader.setInfile(args[4]);
-                    //springDataLoader.process();
+                    sdkBulkDataLoaderProcessor.setContainer(args[1]);
+                    sdkBulkDataLoaderProcessor.setSkipCount(Long.parseLong(args[2]));
+                    sdkBulkDataLoaderProcessor.setMaxRecords(Long.parseLong(args[3]));
+                    sdkBulkDataLoaderProcessor.setLoadType(args[4]);
+                    sdkBulkDataLoaderProcessor.setInfile(args[5]);
+                    sdkBulkDataLoaderProcessor.process();
                     break;
 
                 default:

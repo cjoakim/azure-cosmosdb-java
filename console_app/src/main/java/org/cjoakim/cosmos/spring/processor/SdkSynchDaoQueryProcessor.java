@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 /**
- *
+ * Execute CosmosDB queries with the SDK and Synch methods.
  *
  * Chris Joakim, Microsoft, September 2022
  */

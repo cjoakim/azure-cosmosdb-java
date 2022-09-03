@@ -10,7 +10,7 @@ import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import java.io.*;
 
 /**
- * This ConsoleAppProcessor parses the raw downloaded 'data/epa/8hour_44201_2021/8hour_44201_2021.csv'
+ * This Processor parses the raw downloaded 'data/epa/8hour_44201_2021/8hour_44201_2021.csv'
  * and parses it into JSON file 'data/epa/8hour_44201_2021/ozone_telemetry.json' containing n-number
  * of documents, where n is a command-line argument.
  *

@@ -3,7 +3,7 @@ package org.cjoakim.cosmos.spring.processor;
 import java.text.DecimalFormat;
 
 /**
- *
+ * Abstract superclass for processing delegated from the main entry-point class.
  *
  * Chris Joakim, Microsoft, September 2022
  */

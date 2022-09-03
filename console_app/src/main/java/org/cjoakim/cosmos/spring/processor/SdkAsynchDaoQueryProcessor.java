@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * Execute CosmosDB queries with the SDK and Asynch methods.
  *
  * Chris Joakim, Microsoft, September 2022
  */

@@ -1,18 +1,13 @@
 package org.cjoakim.cosmos.spring.dao;
 
 import com.azure.cosmos.*;
-import com.azure.cosmos.models.CosmosQueryRequestOptions;
-import com.azure.cosmos.models.FeedResponse;
-import com.azure.cosmos.util.CosmosPagedFlux;
+import com.azure.cosmos.models.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.cjoakim.cosmos.spring.AppConfiguration;
 import org.cjoakim.cosmos.spring.model.TelemetryEvent;
 import org.cjoakim.cosmos.spring.model.TelemetryQueryResults;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
+import reactor.core.publisher.Flux;
 
 /**
  * This is a Data Access Object (DAO) which uses the CosmosDB SDK for Java
@@ -145,5 +140,14 @@ public class CosmosAsynchDao {
         }
         resultsStruct.stop();
         return resultsStruct;
+    }
+
+    public void bulkCreateTelemetryEvents(Flux<TelemetryEvent> events) {
+
+        Flux<CosmosItemOperation> cosmosItemOperations = events.map(
+                event -> CosmosBulkOperations.getCreateItemOperation(
+                        event, new PartitionKey(event.getPk())));
+
+        container.executeBulkOperations(cosmosItemOperations).blockLast();
     }
 }
