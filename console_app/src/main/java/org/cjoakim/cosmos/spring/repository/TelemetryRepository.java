@@ -33,10 +33,6 @@ public interface TelemetryRepository extends
     Iterable<TelemetryEvent>  findByObservationCount(
             @Param("observationCount") long observationCount,
             @Param("nullObservations") long nullObservations);
-
-
-
-
 }
 
 //        {

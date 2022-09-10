@@ -39,15 +39,12 @@ public class TelemetryRepositoryExtensionsImpl implements TelemetryRepositoryExt
         Criteria criteria1 = Criteria.getInstance(
                 CriteriaType.IS_EQUAL, "stateCode", Collections.singletonList(stateCode),
                 Part.IgnoreCaseType.NEVER);
-
         Criteria criteria2 = Criteria.getInstance(
                 CriteriaType.IN, "siteNum", Collections.singletonList(siteNumbers),
                 Part.IgnoreCaseType.NEVER);
-
         Criteria allCriteria = Criteria.getInstance(CriteriaType.AND, criteria1, criteria2);
 
         CosmosQuery query = new CosmosQuery(allCriteria);
-
         return template.find(query, TelemetryEvent.class, containerName);
     }
 }
