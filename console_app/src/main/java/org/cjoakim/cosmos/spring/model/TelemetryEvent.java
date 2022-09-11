@@ -1,6 +1,8 @@
 package org.cjoakim.cosmos.spring.model;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.GeneratedValue;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.cjoakim.cosmos.spring.AppConstants;
+import org.springframework.data.annotation.Id;
 
 /**
  *
@@ -22,7 +25,11 @@ import org.cjoakim.cosmos.spring.AppConstants;
 @Container(containerName=AppConstants.TELEMETRY_CONTAINER_NAME)
 public class TelemetryEvent implements AppConstants {
 
+    @Id
+    @GeneratedValue
     private String id;  // CosmosDB document ID
+
+    @PartitionKey
     private String pk;  // CosmosDB partition key
 
     private String stateCode;
