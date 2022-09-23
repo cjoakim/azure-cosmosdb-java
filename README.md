@@ -178,7 +178,9 @@ task transformRawEpaOzoneData(type: JavaExec) {
 
 > gradle queryTelemetryWithSpringData
 
-> gradle queryTelemetryWithSdk 
+> gradle queryTelemetryWithSynchSdk 
+
+> gradle queryTelemetryWithAsynchSdk 
 
 > gradle deleteAllDocumentsWithSpringData 
 

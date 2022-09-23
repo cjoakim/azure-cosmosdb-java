@@ -93,7 +93,7 @@ public class CosmosSynchDao {
 
     public TelemetryQueryResults getAllTelemetry() {
 
-        String sql = "select * from c offset 0 limit 10000";
+        String sql = "select * from c offset 0 limit 3000";
         int    pageSize = 100;
         String continuationToken = null;
         CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();

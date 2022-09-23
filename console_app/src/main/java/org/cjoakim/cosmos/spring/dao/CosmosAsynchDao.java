@@ -87,7 +87,7 @@ public class CosmosAsynchDao {
 
     public TelemetryQueryResults getAllTelemetry() {
 
-        String sql = "select * from c offset 0 limit 10000";
+        String sql = "select * from c offset 0 limit 1000";
         int    pageSize = 100;
         String continuationToken = null;
         CosmosQueryRequestOptions queryOptions = new CosmosQueryRequestOptions();
@@ -96,22 +96,27 @@ public class CosmosAsynchDao {
 
         // Execute the SQL query and iterate the paginated result set,
         // collecting the documents and total RU charge.
-        do {
-            Iterable<FeedResponse<TelemetryEvent>> feedResponseIterator =
-                    container.queryItems(sql, queryOptions, TelemetryEvent.class).byPage(
-                            continuationToken, pageSize).toIterable();  // Asynch Flux to Iterable
+        try {
+            do {
+                Iterable<FeedResponse<TelemetryEvent>> feedResponseIterator =
+                        container.queryItems(sql, queryOptions, TelemetryEvent.class).byPage(
+                                continuationToken, pageSize).toIterable();  // Asynch Flux to Iterable
 
-            for (FeedResponse<TelemetryEvent> page : feedResponseIterator) {
-                for (TelemetryEvent doc : page.getResults()) {
-                    resultsStruct.addDocument(doc);
+                for (FeedResponse<TelemetryEvent> page : feedResponseIterator) {
+                    for (TelemetryEvent doc : page.getResults()) {
+                        resultsStruct.addDocument(doc);
+                    }
+                    resultsStruct.addRequestCharge(page.getRequestCharge());
+                    resultsStruct.incrementPageCount();
+                    continuationToken = page.getContinuationToken();
                 }
-                resultsStruct.addRequestCharge(page.getRequestCharge());
-                resultsStruct.incrementPageCount();
-                continuationToken = page.getContinuationToken();
             }
+            while (continuationToken != null);
+            resultsStruct.stop();
         }
-        while (continuationToken != null);
-        resultsStruct.stop();
+        catch (Throwable t) {
+            t.printStackTrace();
+        }
         return resultsStruct;
     }
 
